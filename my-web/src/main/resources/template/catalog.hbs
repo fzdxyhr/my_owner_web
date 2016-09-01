@@ -1,0 +1,18 @@
+{{#each paths}}
+###{{@key}}
+{{#get}}
+  <a href="#{{operationId}}">GET {{summary}}</a>
+{{/get}}
+{{#post}}
+  <a href="#{{operationId}}">POST {{summary}}</a>
+{{/post}}
+{{#put}}
+<a href="#{{operationId}}">PUT {{summary}}</a>
+{{/put}}
+{{#delete}}
+<a href="#{{operationId}}">DELETE {{summary}}</a>
+{{/delete}}
+{{#patch}}
+<a href="#{{operationId}}">PATCH {{summary}}</a>
+{{/patch}}
+{{/each}}
