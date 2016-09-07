@@ -21,7 +21,7 @@
         <swagger.scheme>http</swagger.scheme>
         <swagger.api.version>v1</swagger.api.version>
         <swagger.api.description>用户管理相关接口</swagger.api.description>
-        <swagger.api.location>com.yhr.conrolller</swagger.api.location>
+        <swagger.api.location>com.yhr.controller</swagger.api.location>
     </properties>
 
     <dependencies>
@@ -71,6 +71,11 @@
             <groupId>io.swagger</groupId>
             <artifactId>swagger-core</artifactId>
             <version>1.5.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.2.4.Final</version>
         </dependency>
     </dependencies>
 
