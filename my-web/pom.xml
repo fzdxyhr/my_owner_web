@@ -80,6 +80,22 @@
     </dependencies>
 
     <build>
+        <filters>
+            <filter>src/main/filters/filter-${env}.properties</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/filters/resources/${env}</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>readme.txt</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>com.github.kongchen</groupId>
@@ -124,6 +140,61 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!--本地环境-->
+        <profile>
+            <id>localhost</id>
+            <properties>
+                <env>localhost</env>
+            </properties>
+        </profile>
+        <!--家里使用的环境-->
+        <profile>
+            <id>home</id>
+            <properties>
+                <env>home</env>
+            </properties>
+        </profile>
+        <!--开发环境-->
+        <profile>
+            <id>development</id>
+            <properties>
+                <env>development</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!--测试环境-->
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+        </profile>
+        <!--压测环境-->
+        <profile>
+            <id>pressure</id>
+            <properties>
+                <env>pressure</env>
+            </properties>
+        </profile>
+        <!--预生产环境-->
+        <profile>
+            <id>preproduction</id>
+            <properties>
+                <env>preproduction</env>
+            </properties>
+        </profile>
+        <!--生产环境-->
+        <profile>
+            <id>product</id>
+            <properties>
+                <env>product</env>
+            </properties>
+        </profile>
+    </profiles>
 
 
 </project>

@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
+import java.text.SimpleDateFormat;
+
 /**
  * @author yhr
  * @version latest
@@ -37,6 +39,7 @@ public class Application extends SpringBootServletInitializer {
     public HttpMessageConverters initJackson() {
         MappingJackson2HttpMessageConverter jacksonConverter = new MappingJackson2HttpMessageConverter();
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"));
         objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
         jacksonConverter.setObjectMapper(objectMapper);
         HttpMessageConverter<?> converter = jacksonConverter;

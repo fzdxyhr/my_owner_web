@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class UserController {
         User user = new User();
         user.setUserName(userVo.getUserName());
         user.setPassword(userVo.getPassword());
-        user.setId(userVo.getId());
+        user.setCreateTime(new Date());
         user = userRepository.save(user);
         return user;
     }

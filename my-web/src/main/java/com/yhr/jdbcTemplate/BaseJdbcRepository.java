@@ -12,7 +12,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,27 +67,38 @@ public class BaseJdbcRepository<T, ID extends Serializable> {
         try {
             Class clazz = entity.getClass();
             Field[] fields = clazz.getDeclaredFields();
-            StringBuffer sql = new StringBuffer("insert into " + this.getTableName() + " values(");
+            StringBuffer columns = new StringBuffer();
             StringBuffer values = new StringBuffer();
             for (Field field : fields) {
                 String name = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
-                Method method = clazz.getMethod("get"+name);
+                Method method = clazz.getMethod("get" + name);
                 Object value = method.invoke(entity);
-                //当数据库中设置id为自增时，获取数据库中最大的值加1作为自增值
-                if (field.getName().equals(this.getPrimaryKey()) && value == null) {
-                    if(typeEntityClass ==  Long.class) {
-                        value = (Long)this.getMaxCount() + 1;
-                    }else if(typeEntityClass == Integer.class) {
-                        value = (Integer)this.getMaxCount() + 1;
+                if (value != null) {//获取不为空的字段名
+                    String columnName = null;
+                    if(field.isAnnotationPresent(Id.class) && !field.isAnnotationPresent(Column.class)) {
+                        columnName = field.getName();
                     }
-                    field.setAccessible(true);
-                    field.set(entity,value);
+                    else {
+                        Column column = field.getAnnotation(Column.class);
+                        columnName = column.name();
+                    }
+                    columns.append("," + columnName);
                 }
-                values.append("," + value);
+                if(value != null) {
+                    if(value instanceof Date) {
+                        value = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(value);
+                    }
+                    values.append(",\"" + value + "\"");
+                }
             }
             values.deleteCharAt(0);
+            columns.deleteCharAt(0);
+            StringBuffer sql = new StringBuffer("insert into " + this.getTableName() +"("+ columns.toString() + ") values(");
             sql.append(values.toString() + ")");
             this.jdbcTemplate.execute(sql.toString());
+            ID value = this.getMaxCount();
+            //返回数据库中的数据
+            entity = this.findOne(value);
             return entity;
         } catch (Exception ex) {
             ex.printStackTrace();

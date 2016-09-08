@@ -2,10 +2,8 @@ package com.yhr.po;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author yhr
@@ -18,9 +16,12 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class User {
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     @Column(name = "username")
-    private String UserName;
+    private String userName;
     @Column(name = "password")
     private String password;
+    @Column(name = "create_time")
+    private Date createTime;
 }
