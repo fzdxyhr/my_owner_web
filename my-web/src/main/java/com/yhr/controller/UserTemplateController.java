@@ -1,7 +1,7 @@
 package com.yhr.controller;
 
-import com.yhr.jdbcTemplate.MyJdbcTemplate;
 import com.yhr.po.User;
+import com.yhr.repository.MyJdbcTemplate;
 import com.yhr.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,7 +26,6 @@ public class UserTemplateController {
     @Autowired
     private MyJdbcTemplate myJdbcTemplate;
 
-
     @ApiOperation("获取用户列表")
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<User> list() {
@@ -39,7 +39,7 @@ public class UserTemplateController {
         User user = new User();
         user.setUserName(userVo.getUserName());
         user.setPassword(userVo.getPassword());
-//        user.setCreateTime(new Date());
+        user.setCreateTime(new Date());
         user = myJdbcTemplate.save(user);
         return user;
     }

@@ -45,5 +45,4 @@ public class Application extends SpringBootServletInitializer {
         HttpMessageConverter<?> converter = jacksonConverter;
         return new HttpMessageConverters(converter);
     }
-
 }

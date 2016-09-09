@@ -1,7 +1,8 @@
-package com.yhr.jdbcTemplate;
+package com.yhr.repository;
 
+import com.yhr.jdbcTemplate.BaseJdbcRepository;
 import com.yhr.po.User;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 /**
  * @author yhr
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * @date 2016/9/6
  * @description
  */
-@Repository
+@Component
 public class MyJdbcTemplate extends BaseJdbcRepository<User,Long> {
 
 }

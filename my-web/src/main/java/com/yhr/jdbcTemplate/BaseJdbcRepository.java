@@ -3,6 +3,7 @@ package com.yhr.jdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -23,8 +24,8 @@ import java.util.List;
  * @date 2016/9/6
  * @description
  */
-
-public class BaseJdbcRepository<T, ID extends Serializable> {
+@Repository
+public class BaseJdbcRepository<T,ID extends Serializable> {
 
     private Class<T> entityClass;
     private Class<ID> typeEntityClass;
@@ -33,7 +34,7 @@ public class BaseJdbcRepository<T, ID extends Serializable> {
     private JdbcTemplate jdbcTemplate;
 
     public BaseJdbcRepository() {
-        Type genType = getClass().getGenericSuperclass();
+        Type genType = getClass().getGenericInterfaces()[0];
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
         entityClass = (Class) params[0];
         typeEntityClass = (Class) params[1];
