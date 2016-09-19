@@ -3,7 +3,6 @@ package com.yhr.jdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -24,7 +23,7 @@ import java.util.List;
  * @date 2016/9/6
  * @description
  */
-@Repository
+
 public class BaseJdbcRepository<T,ID extends Serializable> {
 
     private Class<T> entityClass;
