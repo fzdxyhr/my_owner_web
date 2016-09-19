@@ -34,7 +34,7 @@ public class BaseJdbcRepository<T,ID extends Serializable> {
     private JdbcTemplate jdbcTemplate;
 
     public BaseJdbcRepository() {
-        Type genType = getClass().getGenericInterfaces()[0];
+        Type genType = getClass().getGenericSuperclass();
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
         entityClass = (Class) params[0];
         typeEntityClass = (Class) params[1];
