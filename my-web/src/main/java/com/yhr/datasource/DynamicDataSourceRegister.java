@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.bind.RelaxedDataBinder;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.core.env.Environment;
@@ -26,6 +27,7 @@ import java.util.Map;
  * @date 2016/9/19
  * @description
  */
+@Configuration
 public class DynamicDataSourceRegister implements BeanDefinitionRegistryPostProcessor,EnvironmentAware{
     /**
      * 方法的执行顺序是：
@@ -88,6 +90,9 @@ public class DynamicDataSourceRegister implements BeanDefinitionRegistryPostProc
         dsMap.put("url", propertyResolver.getProperty("url"));
         dsMap.put("username", propertyResolver.getProperty("username"));
         dsMap.put("password", propertyResolver.getProperty("password"));
+        //创建数据源;
+        defaultDataSource = buildDataSource(dsMap);
+        dataBinder(defaultDataSource, environment);
     }
 
     /**
