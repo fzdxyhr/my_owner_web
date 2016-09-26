@@ -59,6 +59,10 @@ public class DynamicDataSourceRegister implements BeanDefinitionRegistryPostProc
         beanDefinition.setBeanClass(DynamicDataSource.class);
         beanDefinition.setSynthetic(true);
         beanDefinitionRegistry.registerBeanDefinition("dataSource", beanDefinition);
+//        GenericBeanDefinition beanDefinition2 = new GenericBeanDefinition();
+//        beanDefinition2.setBeanClass(DynamicDataSourceAspect.class);
+//        beanDefinition2.setSynthetic(true);
+//        beanDefinitionRegistry.registerBeanDefinition("dynamicDataSourceAspect", beanDefinition2);
 
     }
 
@@ -73,6 +77,7 @@ public class DynamicDataSourceRegister implements BeanDefinitionRegistryPostProc
             DynamicDataSourceContextHolder.dataSourceIds.add(key);
         }
         BeanDefinition beanDefinition = beanFactory.getBeanDefinition("dataSource");
+
         MutablePropertyValues mpv = beanDefinition.getPropertyValues();
         mpv.addPropertyValue("defaultTargetDataSource", defaultDataSource);
         mpv.addPropertyValue("targetDataSources", targetDataSources);

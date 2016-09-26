@@ -8,8 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
-import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
@@ -23,7 +25,8 @@ import java.text.SimpleDateFormat;
  */
 
 @SpringBootApplication
-@ServletComponentScan
+@ComponentScan("com.yhr")
+@EnableAspectJAutoProxy
 public class Application extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -32,8 +35,19 @@ public class Application extends SpringBootServletInitializer {
 
     //主函数
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class, args);
+        ApplicationContext ctx =SpringApplication.run(Application.class, args);
+        String[] beanNames =  ctx.getBeanDefinitionNames();
+        System.out.println("所以beanNames个数："+beanNames.length);
+        for(String bn:beanNames){
+            System.out.println(bn);
+        }
     }
+
+//    @Bean
+//    public DynamicDataSourceAspect get(){
+//        DynamicDataSourceAspect dynamicDataSourceAspect = new DynamicDataSourceAspect();
+//        return dynamicDataSourceAspect;
+//    }
 
     @Bean
     public HttpMessageConverters initJackson() {

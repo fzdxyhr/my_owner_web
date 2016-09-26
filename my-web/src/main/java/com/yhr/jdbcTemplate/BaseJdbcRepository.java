@@ -62,7 +62,6 @@ public class BaseJdbcRepository<T,ID extends Serializable> {
         }
         return null;
     }
-
     public T save(T entity) {
         try {
             Class clazz = entity.getClass();

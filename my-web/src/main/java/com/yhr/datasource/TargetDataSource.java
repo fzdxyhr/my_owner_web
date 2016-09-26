@@ -14,4 +14,5 @@ import java.lang.annotation.*;
 @Documented
 public @interface TargetDataSource {
     String value();
+    String name() default "";
 }

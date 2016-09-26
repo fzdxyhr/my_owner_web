@@ -10,13 +10,14 @@ import org.springframework.stereotype.Component;
 /**
  * @author yhr
  * @version latest
- * @date 2016/9/19
+ * @date 2016/9/20
  * @description
  */
 @Aspect
-@Order(-10)//保证该AOP在@Transactional之前执行
+@Order(-10)
 @Component
 public class DynamicDataSourceAspect {
+
     /*
      * @Before("@annotation(ds)")
      * 的意思是：
@@ -25,6 +26,7 @@ public class DynamicDataSourceAspect {
      * @annotation(targetDataSource)：
      * 会拦截注解targetDataSource的方法，否则不拦截;
      */
+
     @Before("@annotation(targetDataSource)")
     public void changeDataSource(JoinPoint point, TargetDataSource targetDataSource) throws Throwable {
         //获取当前的指定的数据源;
