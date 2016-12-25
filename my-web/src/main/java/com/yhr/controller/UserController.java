@@ -2,6 +2,7 @@ package com.yhr.controller;
 
 import com.yhr.po.User;
 import com.yhr.repository.UserRepository;
+import com.yhr.util.ExportExcelUtil;
 import com.yhr.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,8 +10,10 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by YHR on 2016/8/13.
@@ -36,7 +39,7 @@ public class UserController {
         User user = new User();
         user.setUserName(userVo.getUserName());
         user.setPassword(userVo.getPassword());
-        user.setCreateTime(new Date());
+        //user.setCreateTime(new Date());
         user = userRepository.save(user);
         return user;
     }
@@ -58,6 +61,21 @@ public class UserController {
             return user;
         }
         return null;
+    }
+
+    @ApiOperation("根据id获取用户信息")
+    @RequestMapping(value = "/export",method = RequestMethod.GET)
+    public void getExcel(HttpServletResponse response){
+        List<User> users = userRepository.findAll();
+        ExportExcelUtil<User> exportExcelUtil = new ExportExcelUtil<User>();
+        String[] headers = new String[]{"序号","用户名","密码","创建时间"};
+        Map<String,String> operationMap = new HashMap<String, String>();
+        operationMap.put("userName","add");
+        operationMap.put("password","replace");
+        Map<String,Object> valueMap = new HashMap<String, Object>();
+        valueMap.put("userName","%");
+        valueMap.put("password","-");
+        exportExcelUtil.exportExcel("aa",headers,users,"yyyy-MM-dd HH:mm:ss","aas",response,operationMap,valueMap);
     }
 
 }

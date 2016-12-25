@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +24,9 @@ import java.util.regex.Pattern;
  * @description
  */
 public class ExportExcelUtil<T> {
+
+    public static final String OPERATION_ADD = "add";
+    public static final String OPERATION_REPLACE = "replace";
 
     /**
      * 导出excel数据
@@ -35,7 +39,7 @@ public class ExportExcelUtil<T> {
      * @param response
      */
     public void exportExcel(String title, String[] headers, Collection<T> list, String pattern
-            , String fileName, HttpServletResponse response) {
+            , String fileName, HttpServletResponse response, Map<String, String> operationMap, Map<String, Object> valueMap) {
         // 声明一个工作薄
         HSSFWorkbook workbook = new HSSFWorkbook();
         OutputStream out = null;
@@ -136,7 +140,17 @@ public class ExportExcelUtil<T> {
                                 bsValue, HSSFWorkbook.PICTURE_TYPE_JPEG));
                     } else {
                         //其它数据类型都当作字符串简单处理
-                        textValue = value.toString();
+                        if (operationMap.containsKey(fieldName)) {
+                            String operation = operationMap.get(fieldName);
+                            String valueReplace = valueMap.get(fieldName).toString();
+                            if (OPERATION_ADD.equalsIgnoreCase(operation)) {
+                                textValue = value.toString() + valueReplace;
+                            } else if (OPERATION_REPLACE.equalsIgnoreCase(operation)) {
+                                textValue = valueReplace;
+                            }
+                        } else {
+                            textValue = value.toString();
+                        }
                     }
                     //如果不是图片数据，就利用正则表达式判断textValue是否全部由数字组成
                     if (textValue != null) {
