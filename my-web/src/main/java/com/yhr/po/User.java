@@ -3,7 +3,6 @@ package com.yhr.po;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * @author yhr
@@ -22,6 +21,6 @@ public class User {
     private String userName;
     @Column(name = "password")
     private String password;
-    @Column(name = "create_time")
-    private Date createTime;
+    //@Column(name = "create_time")
+    //private Date createTime;
 }

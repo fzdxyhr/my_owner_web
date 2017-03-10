@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,7 +44,7 @@ public class UserTemplateController {
         User user = new User();
         user.setUserName(userVo.getUserName());
         user.setPassword(userVo.getPassword());
-        user.setCreateTime(new Date());
+        //user.setCreateTime(new Date());
         user = myJdbcTemplate.save(user);
         return user;
     }
@@ -57,7 +56,7 @@ public class UserTemplateController {
         User user = new User();
         user.setUserName(userVo.getUserName());
         user.setPassword(userVo.getPassword());
-        user.setCreateTime(new Date());
+        //user.setCreateTime(new Date());
         user = myJdbcTemplate.save(user);
         return user;
     }
@@ -69,7 +68,7 @@ public class UserTemplateController {
         User user = new User();
         user.setUserName(userVo.getUserName());
         user.setPassword(userVo.getPassword());
-        user.setCreateTime(new Date());
+        //user.setCreateTime(new Date());
         user = myJdbcTemplate.save(user);
         return user;
     }
@@ -90,12 +89,12 @@ public class UserTemplateController {
     }
 
     @ApiOperation("根据id获取用户信息")
-    @RequestMapping(value = "/export", method = RequestMethod.GET)
+    @RequestMapping(value = "/export1", method = RequestMethod.GET)
     public void export(HttpServletResponse response) {
         List<User> users = myJdbcTemplate.findAll();
         ExportExcelUtil<User> ex = new ExportExcelUtil<User>();
         String[] headers = {"序号", "姓名", "密码", "创建时间"};
-        ex.exportExcel("测试", headers, users, "yyyy-MM-dd HH:mm:ss", "用户列表", response);
+        //ex.exportExcel("测试", headers, users, "yyyy-MM-dd HH:mm:ss", "用户列表", response);
     }
 
 }
