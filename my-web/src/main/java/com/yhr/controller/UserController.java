@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -58,6 +59,13 @@ public class UserController {
             return user;
         }
         return null;
+    }
+
+    @ApiOperation("通过文件方式创建文章")
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public String createByFile(@ApiParam(value = "文件流", required = true) @RequestParam("articleFile") MultipartFile articleFile){
+        System.out.println("success");
+        return "success";
     }
 
 }
